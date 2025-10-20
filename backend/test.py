@@ -1,29 +1,15 @@
-from dotenv import load_dotenv
-import os
+from data.dataExplorer import DataExplorer
+from data.SeaDataFetcher import SeaDataFetcher
+from data.WeatherDataFetcher import WeatherDataFetcher
+import xarray as xr
+import numpy as np
 
-# .env dosyasını yükle
-load_dotenv()
+# Farklı yol denemesi
+FILE_PATH = "src/data/copernicus_data/"
 
-# Değerleri oku
-username = os.getenv("COPERNICUS_USERNAME")
-password = os.getenv("COPERNICUS_PASSWORD")
+weatherfetcher = WeatherDataFetcher()
+weatherfetcher.fetch_data()
 
-# Kontrol et
-print("🔍 .env Dosyası Test Ediliyor...")
-print("-" * 50)
-
-if username:
-    print(f"✅ COPERNICUS_USERNAME: {username}")
-else:
-    print("❌ COPERNICUS_USERNAME bulunamadı!")
-
-if password:
-    print(f"✅ COPERNICUS_PASSWORD: {(password)}")
-else:
-    print("❌ COPERNICUS_PASSWORD bulunamadı!")
-
-print("-" * 50)
-
-# Diğer ayarları da test edebilirsiniz
-cache_expire = os.getenv("CACHE_EXPIRE", "3600")
-print(f"📦 CACHE_EXPIRE: {cache_expire}")
+explorer = DataExplorer(FILE_PATH)
+explorer.show_basic_info()
+explorer.show_folder_summary()
